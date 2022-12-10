@@ -1,0 +1,370 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<component xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.3"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.3 http://maven.apache.org/xsd/component-1.1.3.xsd">
+    <dependencySets>
+        <!--
+              Every lib - except the jx related ones - in the royale.compiler namespace
+              should go to the lib directory.
+        -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <!-- FlashBuilder doesn't like us appending the version to the jar name -->
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.framework.distribution:compc:jar</include>
+                <include>org.apache.royale.compiler:compiler:jar</include>
+                <include>org.apache.royale.framework.distribution:compiler-asc:jar</include>
+                <include>org.apache.royale.compiler:compiler-common:jar</include>
+                <include>org.apache.royale.framework.distribution:compiler-compc:jar</include>
+                <include>org.apache.royale.framework.distribution:compiler-mxmlc:jar</include>
+                <include>org.apache.royale.framework.distribution:compiler-optimizer:jar</include>
+                <include>org.apache.royale.framework.distribution:compiler-swfdump:jar</include>
+                <include>org.apache.royale.compiler:flex-compiler-oem:jar</include>
+                <include>org.apache.royale.framework.distribution:mxmlc:jar</include>
+                <include>org.apache.royale.compiler:swfutils:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <!-- The debugger is named fdb in the Ant distribution -->
+            <outputFileNameMapping>fdb.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.compiler:debugger:jar</include>
+            </includes>
+        </dependencySet>
+        <!-- Everything else should go to the lib/ext directory -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib/external</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>*:antlr:jar</include>
+                <include>*:antlr-runtime:jar</include>
+                <include>*:commons-cli:jar</include>
+                <include>*:commons-compress:jar</include>
+                <include>*:commons-io:jar</include>
+                <include>*:commons-lang:jar</include>
+                <include>*:commons-lang3:jar</include><!-- Why is this needed? -->
+                <include>*:flex-tool-api:jar</include>
+                <include>*:guava:jar</include>
+                <include>*:lzma-sdk-4j:jar</include>
+            </includes>
+        </dependencySet>
+        <!-- Put the framework js-swcs into the frameworks/libs directory -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>frameworks/js/libs</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}JS.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.framework:*:swc:js</include>
+            </includes>
+        </dependencySet>
+
+        <!-- Put all the jx libs in the js/lib directory -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>*:args4j:jar</include>
+                <include>*:asdoc:*</include><!-- missing -->
+                <include>*:closure-compiler:jar</include>
+                <include>*:closure-compiler-externs:jar</include>
+                <include>*:commons-io:*</include>
+                <include>org.apache.royale.compiler:compiler-playerglobalc:jar</include>
+                <include>*:dom4j:*</include>
+                <include>*:flex-tool-api:*</include>
+                <include>*:guava:*</include>
+                <include>*:jsc:*</include>
+                <include>*:slf4j-api:*</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib</outputDirectory>
+            <outputFileNameMapping>compc.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.framework.distribution:compiler-compjsc:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib</outputDirectory>
+            <outputFileNameMapping>externc.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.compiler:compiler-externc:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib/royaleunit</outputDirectory>
+            <outputFileNameMapping>java-websocket.jar</outputFileNameMapping>
+            <includes>
+                <include>org.java-websocket:Java-WebSocket:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib/royaleunit</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>*:dom4j:*</include>
+                <include>*:gson:jar</include>
+                <include>*:slf4j-api:*</include>
+                <include>com.microsoft.playwright:playwright:jar</include>
+                <include>com.microsoft.playwright:driver:jar</include>
+                <include>com.microsoft.playwright:driver-bundle:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib</outputDirectory>
+            <outputFileNameMapping>mxmlc.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.framework.distribution:compiler-mxmljsc:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet><!-- missing -->
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib</outputDirectory>
+            <outputFileNameMapping>royaleUnitTasks.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.compiler:royaleunit-ant-tasks:jar</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/lib</outputDirectory>
+            <outputFileNameMapping>compiler-royaleTasks.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.royale.compiler:royale-ant-tasks:jar</include>
+            </includes>
+        </dependencySet>
+
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>js/libs</outputDirectory>
+            <includes>
+                <include>org.apache.royale.typedefs:*:swc</include>
+            </includes>
+            <excludes>
+                <exclude>org.apache.royale.typedefs:royale-typedefs-playerglobal:swc</exclude>
+                <exclude>org.apache.royale.typedefs:royale-typedefs-airglobal:swc</exclude>
+            </excludes>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+        </dependencySet>
+
+        <!-- Copy the fonts -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>frameworks/fonts</outputDirectory>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <unpack>true</unpack>
+            <includes>
+                <include>org.apache.royale.framework:Fonts:war</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <!-- Include the LICENSE, NOTICE, README, RELEASE_NOTES from the root -->
+        <fileSet>
+            <directory>..</directory>
+            <includes>
+                <include>LICENSE*</include>
+                <include>NOTICE</include>
+                <include>README*</include>
+                <include>RELEASE*</include>
+                <include>ide/**</include>
+            </includes>
+        </fileSet>
+
+        <!-- Copy the bin scripts -->
+        <fileSet>
+            <directory>${project.build.directory}/dependency/compiler</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*</include>
+            </includes>
+            <excludes>
+                <exclude>META-INF/**</exclude>
+                <exclude>*.bat</exclude>
+            </excludes>
+            <!-- Make all scripts in here executable -->
+            <fileMode>0755</fileMode>
+            <lineEnding>lf</lineEnding>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/dependency/compiler</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*.bat</include>
+            </includes>
+            <!-- Make all scripts in here executable -->
+            <fileMode>0755</fileMode>
+            <lineEnding>crlf</lineEnding>
+        </fileSet>
+
+        <!-- Copy the js scripts -->
+        <fileSet>
+            <directory>../js/bin</directory>
+            <outputDirectory>js/bin</outputDirectory>
+            <includes>
+                <include>*</include>
+            </includes>
+            <excludes>
+                <exclude>*.bat</exclude>
+            </excludes>
+            <!-- Make all scripts in here executable -->
+            <fileMode>0755</fileMode>
+            <lineEnding>lf</lineEnding>
+        </fileSet>
+        <fileSet>
+            <directory>../js/bin</directory>
+            <outputDirectory>js/bin</outputDirectory>
+            <includes>
+                <include>*.bat</include>
+            </includes>
+            <!-- Make all scripts in here executable -->
+            <fileMode>0755</fileMode>
+            <lineEnding>crlf</lineEnding>
+        </fileSet>
+
+        <!-- Copy the projects -->
+        <fileSet>
+            <outputDirectory>frameworks/projects</outputDirectory>
+            <directory>../frameworks/projects</directory>
+            <includes>
+                <!-- Include only the source directories -->
+                <include>*/src/**</include>
+            </includes>
+        </fileSet>
+
+        <!-- Copy the js-projects -->
+        <fileSet>
+            <outputDirectory>frameworks/js/projects</outputDirectory>
+            <directory>../frameworks/js/projects</directory>
+            <includes>
+                <include>*/src/**</include>
+            </includes>
+        </fileSet>
+
+        <!-- Copy the themes -->
+        <fileSet>
+            <directory>../frameworks/themes</directory>
+            <outputDirectory>frameworks/themes</outputDirectory>
+            <includes>
+                <!-- Include only the source directories -->
+                <include>*/src/**</include>
+            </includes>
+        </fileSet>
+
+        <!-- Copy the unpacked closure-library -->
+        <fileSet>
+            <outputDirectory>js/lib/google/closure-library/closure</outputDirectory>
+            <directory>target/closure-library-temp</directory>
+            <includes>
+                <include>**</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <files>
+        <!-- Copy the right sdk-description -->
+        <file>
+            <source>src/main/resources/${assembly.sdk-description}</source>
+            <outputDirectory></outputDirectory>
+            <destName>royale-sdk-description.xml</destName>
+            <filtered>true</filtered>
+        </file>
+
+        <!-- Copy the configurations (also filter the content and rename them) -->
+        <file>
+            <source>${project.build.directory}/processed-configs/ace-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>ace-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.build.directory}/processed-configs/air-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>air-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>../frameworks/asdoc-config.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/processed-configs/createjs-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>createjs-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.build.directory}/processed-configs/jquery-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>jquery-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.build.directory}/processed-configs/js-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>js-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>../frameworks/mxml-2009-manifest.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/processed-configs/node-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>node-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.build.directory}/processed-configs/royale-config-template.xml</source>
+            <outputDirectory>frameworks</outputDirectory>
+            <destName>royale-config.xml</destName>
+            <filtered>true</filtered>
+        </file>
+
+        <!-- Rename main js dummy jar artifacts to "mxmlc.jar" and "compc.jar" that is what an IDE expects to find -->
+        <file>
+            <source>jars/compiler-mxmljsc/target/compiler-mxmljsc-${project.royale.compiler.version}.jar</source>
+            <outputDirectory>js/lib</outputDirectory>
+            <destName>mxmlc.jar</destName>
+        </file>
+        <file>
+            <source>jars/compiler-compjsc/target/compiler-compjsc-${project.royale.compiler.version}.jar</source>
+            <outputDirectory>js/lib</outputDirectory>
+            <destName>compc.jar</destName>
+        </file>
+        <!-- Copy the jsc.jar itself -->
+        <file>
+            <source>${project.build.directory}/jsc/jsc.jar</source>
+            <outputDirectory>js/lib</outputDirectory>
+        </file>
+    </files>
+</component>
